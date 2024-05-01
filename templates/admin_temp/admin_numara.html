@@ -3,7 +3,7 @@
 {% block sidebar %}
 <div class="content-wrapper">
   <div class="login-logo">
-    <a href="#"><b>Sisteme icon Ekle</b></a>
+    <a href="#"><b>İşletme Numarası</b></a>
   </div><!-- /.login-icon -->
   <div class="login-box-body">
     <p class="login-box-msg"></p>
@@ -30,7 +30,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daha Önce Eklenmiş Olan iconlar (En Üstte Olan Aktif Ve Çalışan Sistem)</h3>
+              <h3 class="box-title">Daha Önce Eklenmiş Olan İşletme Numaraları (En Üstte Olan Aktif Ve Çalışan Sistem)</h3>
               <div class="box-tools">
                 <div class="input-group">
                   
@@ -41,7 +41,7 @@
               <table class="table table-hover">
                 <tr>
                   <th>ID</th>
-                  <th>icon</th>
+                  <th>Numara</th>
                   <th>Sil</th>
 
                 </tr>
@@ -51,12 +51,9 @@
                 <tr>
                   <td>{{i.id}}</td>
                   <td>
-                    {% if i.sayfa_logo %}
-                     <img src="{{i.sayfa_logo.url}}" style="max-width: 150px; min-width: 150px;" alt="">
-                    {% else %}
-                    {% endif %}
+                   {{i.sirket_numarasi}}
                    </td>
-                  <td><a href="{% url 'admin_panel:icon_sileme' i.id %}" class="btn btn-block btn-danger btn-m">İconu Sil</a></td>
+                  <td><a href="{% url 'admin_panel:numara_sileme' i.id %}" class="btn btn-block btn-danger btn-m">Numarayı Sil</a></td>
                 </tr>
                 {% endfor %}
               </table>

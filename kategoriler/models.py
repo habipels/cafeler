@@ -52,13 +52,13 @@ class sayfa_iconu(models.Model):
     sayfa_logo = models.FileField(upload_to='icon/',blank = True,null = True,verbose_name="Sayfaya icon Ekleyin")
 class site_adi(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
-    site_adi_genel = models.CharField(max_length=200)
-    site_url_ayari =kategory_link_ayari(max_length=100 , null="True")
+    site_adi_genel = models.CharField(max_length=200,verbose_name="İşletme Adı")
+    site_url_ayari =kategory_link_ayari(max_length=100 ,verbose_name="İşletme Adı")
     def __str__(self):
         return self.site_adi_genel
 class numara(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
-    sirket_numarasi = models.CharField(max_length=11)
+    sirket_numarasi = models.CharField(max_length=11,verbose_name="İşletme Numarası (0555555555)")
     def __str__(self):
         return self.sirket_numarasi
 class adres(models.Model):
