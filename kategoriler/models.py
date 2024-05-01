@@ -53,6 +53,7 @@ class sayfa_iconu(models.Model):
 class site_adi(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
     site_adi_genel = models.CharField(max_length=200)
+    site_url_ayari =kategory_link_ayari(max_length=100 , null="True")
     def __str__(self):
         return self.site_adi_genel
 class numara(models.Model):
