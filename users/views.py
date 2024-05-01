@@ -15,7 +15,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, f"New account created: {user.username}")
-            return redirect('/')
+            return redirect('admin_panel:dashboard')
 
         else:
             for error in list(form.errors.values()):
@@ -48,7 +48,7 @@ def custom_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f"Hello <b>{user.username}</b>! You have been logged in")
-                return redirect("homepage")
+                return redirect("admin_panel:dashboard")
 
         else:
             for error in list(form.errors.values()):
