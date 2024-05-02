@@ -153,3 +153,65 @@ def eposta_sileme(request,id):
     email_adres.objects.filter(kategori_kime_ait = request.user,id = id).delete()
     return redirect("admin_panel:eposta_duzenleme_sayfasi")
 
+def instagram_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = insta(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = sosyalmedyaInsgr.objects.filter(kategori_kime_ait = request.user).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:instagram_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_insta.html",
+        context=content
+        )
+
+def insta_sileme(request,id):
+    sosyalmedyaInsgr.objects.filter(kategori_kime_ait = request.user,id = id).delete()
+    return redirect("admin_panel:instagram_duzenleme_sayfasi")
+
+
+def banner_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = banner_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = banner.objects.filter(kategori_kime_ait = request.user).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:banner_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_banner.html",
+        context=content
+        )
+
+def banner_sileme(request,id):
+    banner.objects.filter(kategori_kime_ait = request.user,id = id).delete()
+    return redirect("admin_panel:banner_duzenleme_sayfasi")
+
+def hakkimizda_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = hakkimizda_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = hakkimizda.objects.filter(kategori_kime_ait = request.user).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:hakkimizda_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_hakkimizda.html",
+        context=content
+        )

@@ -19,7 +19,15 @@ urlpatterns = [
     #adres
     path("settings/adresi", views.adres_duzenleme_sayfasi, name="adres_duzenleme_sayfasi"),
     path("settings/adresi/<int:id>", views.adres_sileme, name="adres_sileme"),
-     #adres
+    #eposta adres
     path("settings/epostaadresi", views.eposta_duzenleme_sayfasi, name="eposta_duzenleme_sayfasi"),
     path("settings/epostaadresi/<int:id>", views.eposta_sileme, name="eposta_sileme"),
+    #insta
+    path("settings/instadresi", views.instagram_duzenleme_sayfasi, name="instagram_duzenleme_sayfasi"),
+    path("settings/instaadresi/<int:id>", views.insta_sileme, name="insta_sileme"),
+    #banner
+    path("settings/banner", views.banner_duzenleme_sayfasi, name="banner_duzenleme_sayfasi"),
+    path("settings/banner/<int:id>", views.banner_sileme, name="banner_sileme"),
+    #banner
+    path("settings/hakkimizdaduzeltme", views.hakkimizda_duzenleme_sayfasi, name="hakkimizda_duzenleme_sayfasi"),
 ]

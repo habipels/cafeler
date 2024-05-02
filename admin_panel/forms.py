@@ -3,7 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user_model
 from kategoriler.models import *
 from django.forms import ModelForm
-
+from ckeditor.widgets import CKEditorWidget
+from django.forms import CharField
 class logo_ekle(ModelForm):
     class Meta:
         model = sayfa_logosu
@@ -44,4 +45,26 @@ class eposta(ModelForm):
         fields = [
             'sirket_email_adresi'
         ]
+
+class insta(ModelForm):
+    class Meta:
+        model = sosyalmedyaInsgr
+        fields = [
+            'link'
+        ]
+class banner_ekleme(ModelForm):
+    class Meta:
+        model = banner
+        fields = [
+            'sayfa_sirasi',
+            'baner_resim'
+        ]
 #
+class hakkimizda_ekleme(ModelForm):
+    hakkimda = CharField(widget=CKEditorWidget(attrs={'class': 'form-control'}),label="Hakkımızda ",
+        required=False)
+    class Meta:
+        model = hakkimizda
+        fields = [
+            'hakkimda'
+        ]

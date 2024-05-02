@@ -83,7 +83,7 @@ class sosyalmedyafb(models.Model):
         return self.link
 class sosyalmedyaInsgr(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
-    link = models.CharField(max_length=400)
+    link = models.CharField(max_length=400,verbose_name="İnstagram Adres Linki")
     def __str__(self):
         return self.link
 class banner(models.Model):

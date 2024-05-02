@@ -1,0 +1,30 @@
+{% extends "admin_temp/adminhomebase.html" %}
+{% load crispy_forms_tags %}
+{% block sidebar %}
+<div class="content-wrapper">
+  <div class="login-logo">
+    <a href="#"><b>İşletme Hakkımızda Sayfası</b></a>
+  </div><!-- /.login-icon -->
+  <div class="login-box-body">
+    <p class="login-box-msg"></p>
+    <form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    
+      <div class="row">
+        <div class="col-xs-8">    
+          <div class="checkbox icheck">
+            <label>
+              
+            </label>
+          </div>                        
+        </div><!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Ekle</button>
+        </div><!-- /.col -->
+      </div>
+    </form>
+    <!-- Main content -->
+
+      </div><!-- /.content-wrapper -->
+{% endblock sidebar %}
