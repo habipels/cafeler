@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from users.models import *
+
 # Create your models here.
 class kategory_link_ayari(models.CharField):
     def __init__(self, *args, **kwargs):
@@ -112,3 +113,13 @@ class aciklama(models.Model):
 class sekme_icon (models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
     resim = models.FileField(upload_to='icon/',blank = True,verbose_name="sekmeye resim Ekleyiniz")
+
+class bolgeler(models.Model):
+    kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
+    bolge_isimi = models.CharField(max_length=200,verbose_name="Bölge Adı")
+    silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")
+class masalar(models.Model):
+    kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
+    bolge_isimi = models.ForeignKey(bolgeler,verbose_name="Bölge ",blank=True,null=True,on_delete=models.CASCADE)
+    masa_isimi =models.CharField(max_length= 200,verbose_name="Masa Adı")
+    silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")

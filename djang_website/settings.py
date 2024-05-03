@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     "kategoriler",
     "admin_panel",
+    'ckeditor_uploader',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -74,11 +75,16 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+            'custom_tags': 'main.templatetags.custom_tags',
+            },
         },
+        
     },
 ]
 
 WSGI_APPLICATION = 'djang_website.wsgi.application'
+
 
 
 # Database
@@ -114,6 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -123,16 +130,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'width': '100%',
 
-        'wordcount': {
-            'minCharCount': 25
-        }
-    },
-}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -140,7 +139,21 @@ CKEDITOR_CONFIGS = {
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #STATIC_ROOT = os.path.join(BASE_DIR,"staticfiles")
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
 
+CKEDITOR_CONFIGS = {
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 900,
+    },
+}
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/'
@@ -167,3 +180,5 @@ TINYMCE_DEFAULT_CONFIG = {
     "height": "600px",
     'image_caption': True,
 }
+MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')

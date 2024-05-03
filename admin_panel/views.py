@@ -215,3 +215,26 @@ def hakkimizda_duzenleme_sayfasi(request):
         template_name="admin_temp/admin_hakkimizda.html",
         context=content
         )
+
+def bolgeler_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = bolgeler_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = bolgeler.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:bolgeler_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_bolgeler.html",
+        context=content
+        )
+
+def bolgeler_sileme(request,id):
+    bolgeler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:bolgeler_duzenleme_sayfasi")
+

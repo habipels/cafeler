@@ -28,6 +28,9 @@ urlpatterns = [
     #banner
     path("settings/banner", views.banner_duzenleme_sayfasi, name="banner_duzenleme_sayfasi"),
     path("settings/banner/<int:id>", views.banner_sileme, name="banner_sileme"),
-    #banner
+    #hakkımızda
     path("settings/hakkimizdaduzeltme", views.hakkimizda_duzenleme_sayfasi, name="hakkimizda_duzenleme_sayfasi"),
+    #bölgeler
+    path("settings/bolgeler", views.bolgeler_duzenleme_sayfasi, name="bolgeler_duzenleme_sayfasi"),
+    path("settings/bolgeler/<int:id>", views.bolgeler_sileme, name="bolgeler_sileme"),
 ]

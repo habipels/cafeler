@@ -68,3 +68,11 @@ class hakkimizda_ekleme(ModelForm):
         fields = [
             'hakkimda'
         ]
+    
+
+class bolgeler_ekleme(ModelForm):
+    class Meta:
+        model = bolgeler
+        fields = [
+            'bolge_isimi'
+        ]
