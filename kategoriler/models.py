@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from users.models import *
+import qrcode
 
 # Create your models here.
 class kategory_link_ayari(models.CharField):
@@ -113,13 +114,55 @@ class aciklama(models.Model):
 class sekme_icon (models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
     resim = models.FileField(upload_to='icon/',blank = True,verbose_name="sekmeye resim Ekleyiniz")
-
+class menu(models.Model):
+    kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
+    menu_isimi = models.CharField(max_length=200,verbose_name="Menü Adı")
+    silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")
+    def __str__(self) -> str:
+        if self.silinme_bilgisi:
+            return  "Silinen Menü : "+self.menu_isimi
+        else:
+            return self.menu_isimi
 class bolgeler(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
+    bolge_menu = models.ForeignKey(menu,verbose_name="Menü ",blank=True,null=True,on_delete=models.CASCADE)
     bolge_isimi = models.CharField(max_length=200,verbose_name="Bölge Adı")
     silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")
+    def __str__(self) -> str:
+        if self.silinme_bilgisi:
+            return  "Silinen"+self.bolge_isimi
+        else:
+            return self.bolge_isimi
+from PIL import Image
+from io import BytesIO
+import qrcode
+
 class masalar(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
     bolge_isimi = models.ForeignKey(bolgeler,verbose_name="Bölge ",blank=True,null=True,on_delete=models.CASCADE)
     masa_isimi =models.CharField(max_length= 200,verbose_name="Masa Adı")
-    silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")
+    image = models.ImageField(upload_to='qr/',blank=True,null=True,verbose_name="Masa Qrları")
+    silinme_bilgisi = models.BooleanField(default=False,verbose_name="Silinme Bilgisi")
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Eğer bu nesne henüz kaydedilmediyse (yani yeni bir nesne oluşturuluyorsa)
+            data = f"https://example.com/detail/{self.id}/"
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(data)
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="black", back_color="white")
+
+            buffer = BytesIO()
+            img.save(buffer, format='PNG')  # PNG formatında kaydetmek
+            buffer.seek(0)
+            self.image.save(f'qr_code_{self.id}.png', buffer, save=False)  # QR kodunu kaydet
+
+        super().save(*args, **kwargs)
+
+    
+    

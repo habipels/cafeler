@@ -33,4 +33,10 @@ urlpatterns = [
     #bölgeler
     path("settings/bolgeler", views.bolgeler_duzenleme_sayfasi, name="bolgeler_duzenleme_sayfasi"),
     path("settings/bolgeler/<int:id>", views.bolgeler_sileme, name="bolgeler_sileme"),
+    #Menü
+    path("settings/menu", views.menu_duzenleme_sayfasi, name="menu_duzenleme_sayfasi"),
+    path("settings/menu/<int:id>", views.menu_sileme, name="menu_sileme"),
+    #Masa
+    path("settings/masa", views.masa_duzenleme_sayfasi, name="masa_duzenleme_sayfasi"),
+    path("settings/masa/<int:id>", views.masa_sileme, name="masa_sileme"),
 ]

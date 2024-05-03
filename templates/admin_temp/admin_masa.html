@@ -3,7 +3,7 @@
 {% block sidebar %}
 <div class="content-wrapper">
   <div class="login-logo">
-    <a href="#"><b>İşletme Bölgeleri</b></a>
+    <a href="#"><b>İşletme Masaları Ekleme</b></a>
   </div><!-- /.login-icon -->
   <div class="login-box-body">
     <p class="login-box-msg"></p>
@@ -30,7 +30,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daha Önce Eklenmiş Olan Bölgeler</h3>
+              <h3 class="box-title">Daha Önce Eklenmiş Olan İşletme Masaları</h3>
               <div class="box-tools">
                 <div class="input-group">
                   
@@ -41,10 +41,10 @@
               <table class="table table-hover">
                 <tr>
                   <th>ID</th>
-                  <th>Menu</th>
-                  <th>Bölge</th>
-                  <th>Bölge Masa Sayısı</th>
-                  <th>Düzenle</th>
+                  <th>Masa Qr</th>
+                  <th>Masa Adı</th>
+                  <th>Masa Bölgesi</th>
+                  <th>Masa Bölge Menüsü</th>
                   <th>Sil</th>
 
                 </tr>
@@ -54,19 +54,22 @@
                 <tr>
                   <td>{{i.id}}</td>
                   <td>
-                    {% if i.bolge_menu %}
-                    {{i.bolge_menu}}
+                    {% if i.image %}
+                      <img src="{{i.image.url}}" style="max-width: 150px;" alt="">
                     {% else %}
                     {% endif %}
+                    
                   </td>
                   <td>
-                   {{i.bolge_isimi}}
+                   {{i.masa_isimi}}
                    </td>
                    <td>
-                   0
-                   </td>
-                    <td><a href="{% url 'admin_panel:eposta_sileme' i.id %}" class="btn btn-block btn-warning btn-m">Bölge Düzenle</a></td>
-                  <td><a href="{% url 'admin_panel:bolgeler_sileme' i.id %}" class="btn btn-block btn-danger btn-m">Bölge Sil</a></td>
+                    {{i.bolge_isimi}}
+                    </td>
+                    <td>
+                      {{i.bolge_isimi.bolge_menu}}
+                      </td>
+                  <td><a href="{% url 'admin_panel:masa_sileme' i.id %}" class="btn btn-block btn-danger btn-m">Masayı Sil</a></td>
                 </tr>
                 {% endfor %}
               </table>

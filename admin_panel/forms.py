@@ -74,5 +74,21 @@ class bolgeler_ekleme(ModelForm):
     class Meta:
         model = bolgeler
         fields = [
+            'bolge_menu',
             'bolge_isimi'
+        ]
+
+class menu_ekleme(ModelForm):
+    class Meta:
+        model = menu
+        fields = [ 
+            'menu_isimi'
+        ]
+
+class masa_ekleme(ModelForm):
+    class Meta:
+        model = masalar
+        fields = [ 
+            'bolge_isimi',
+            "masa_isimi"
         ]

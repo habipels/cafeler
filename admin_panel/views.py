@@ -233,8 +233,52 @@ def bolgeler_duzenleme_sayfasi(request):
         template_name="admin_temp/admin_bolgeler.html",
         context=content
         )
-
 def bolgeler_sileme(request,id):
     bolgeler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
     return redirect("admin_panel:bolgeler_duzenleme_sayfasi")
+
+
+def menu_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = menu_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = menu.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:menu_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_menu.html",
+        context=content
+        )
+def menu_sileme(request,id):
+    menu.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:menu_duzenleme_sayfasi")
+
+
+
+def masa_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = masa_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = masalar.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:masa_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_masa.html",
+        context=content
+        )
+def masa_sileme(request,id):
+    masalar.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:masa_duzenleme_sayfasi")
 
