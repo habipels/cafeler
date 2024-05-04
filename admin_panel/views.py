@@ -218,7 +218,7 @@ def hakkimizda_duzenleme_sayfasi(request):
 
 def bolgeler_duzenleme_sayfasi(request):
     content = site_bilgileri()
-    logo_ekleme = bolgeler_ekleme(request.POST or None,request.FILES or None)
+    logo_ekleme = bolgeler_ekleme(request.POST or None,request.FILES or None,user=request.user)
     content["form"] = logo_ekleme
     content["iconlar"] = bolgeler.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
     if logo_ekleme.is_valid():
@@ -263,7 +263,7 @@ def menu_sileme(request,id):
 
 def masa_duzenleme_sayfasi(request):
     content = site_bilgileri()
-    logo_ekleme = masa_ekleme(request.POST or None,request.FILES or None)
+    logo_ekleme = masa_ekleme(request.POST or None,request.FILES or None,user=request.user)
     content["form"] = logo_ekleme
     content["iconlar"] = masalar.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
     if logo_ekleme.is_valid():
@@ -281,4 +281,25 @@ def masa_duzenleme_sayfasi(request):
 def masa_sileme(request,id):
     masalar.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
     return redirect("admin_panel:masa_duzenleme_sayfasi")
+
+def kategori_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = kategori_ekleme(request.POST or None,request.FILES or None,user=request.user)
+    content["form"] = logo_ekleme
+    content["iconlar"] = kategoriler.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:kategori_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_kategoriler.html",
+        context=content
+        )
+def kategori_sileme(request,id):
+    kategoriler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:kategori_duzenleme_sayfasi")
 

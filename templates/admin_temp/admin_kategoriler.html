@@ -1,10 +1,9 @@
 {% extends "admin_temp/adminhomebase.html" %}
 {% load crispy_forms_tags %}
-{% load custom_tags %}
 {% block sidebar %}
 <div class="content-wrapper">
   <div class="login-logo">
-    <a href="#"><b>İşletme Bölgeleri</b></a>
+    <a href="#"><b>İşletme Menü Kategorileri</b></a>
   </div><!-- /.login-icon -->
   <div class="login-box-body">
     <p class="login-box-msg"></p>
@@ -31,7 +30,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daha Önce Eklenmiş Olan Bölgeler</h3>
+              <h3 class="box-title">Daha Önce Eklenmiş Olan İşletme Menü Kategorileri</h3>
               <div class="box-tools">
                 <div class="input-group">
                   
@@ -42,9 +41,10 @@
               <table class="table table-hover">
                 <tr>
                   <th>ID</th>
-                  <th>Menu</th>
-                  <th>Bölge</th>
-                  <th>Bölge Masa Sayısı</th>
+                  <th>Üst Kategori Adı</th>
+                  <th>Kategori Adı</th>
+                  <th>Kategorideki Ürün Sayısı</th>
+                  <th>Kategorideki Ürünlerin Toplam Fiyatı</th>
                   <th>Düzenle</th>
                   <th>Sil</th>
 
@@ -55,19 +55,21 @@
                 <tr>
                   <td>{{i.id}}</td>
                   <td>
-                    {% if i.bolge_menu %}
-                    {{i.bolge_menu}}
-                    {% else %}
-                    {% endif %}
-                  </td>
+                   {{i.parent.isim}}
+                   </td>
                   <td>
-                   {{i.bolge_isimi}}
+                   {{i.isim}}
                    </td>
                    <td>
-                   {% masa_sayisi i.bolge_isimi %}
+                   {{i.isim}}
                    </td>
-                    <td><a href="{% url 'admin_panel:eposta_sileme' i.id %}" class="btn btn-block btn-warning btn-m">Bölge Düzenle</a></td>
-                  <td><a href="{% url 'admin_panel:bolgeler_sileme' i.id %}" class="btn btn-block btn-danger btn-m">Bölge Sil</a></td>
+                   <td>
+                   {{i.isim}}
+                   </td>
+                   <td>
+                   {{i.isim}}
+                   </td>
+                  <td><a href="{% url 'admin_panel:kategori_sileme' i.id %}" class="btn btn-block btn-danger btn-m">Kategoriyi Sil</a></td>
                 </tr>
                 {% endfor %}
               </table>

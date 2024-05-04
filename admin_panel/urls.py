@@ -39,4 +39,7 @@ urlpatterns = [
     #Masa
     path("settings/masa", views.masa_duzenleme_sayfasi, name="masa_duzenleme_sayfasi"),
     path("settings/masa/<int:id>", views.masa_sileme, name="masa_sileme"),
+    #kategoriler
+    path("settings/kategoriler", views.kategori_duzenleme_sayfasi, name="kategori_duzenleme_sayfasi"),
+    path("settings/kategoriler/<int:id>", views.kategori_sileme, name="kategori_sileme"),
 ]

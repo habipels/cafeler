@@ -11,13 +11,19 @@ class kategory_link_ayari(models.CharField):
         return str(value).lower().replace(" ","_")
 
 class kategoriler(models.Model):
+    STATUS = (
+        ('True', 'Evet'),
+        ('False', 'Hayır'),
+    )
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
-    isim = models.CharField(max_length=50)
+    isim = models.CharField(max_length=150,verbose_name="Adı")
     link = kategory_link_ayari(max_length=100 , null="True")
     keywords = models.CharField(max_length=255)
     create_at=models.DateTimeField(auto_now_add=True)
     update_at=models.DateTimeField(auto_now=True)
-    parent = models.ForeignKey('self',blank=True,null=True,related_name='children',on_delete=models.CASCADE)
+    Durum=models.CharField(max_length=10,verbose_name="Menüde Göster",choices=STATUS,default = "Evet")
+    parent = models.ForeignKey('self',verbose_name="Üst Kategorisi Var Mı ? ",blank=True,null=True,related_name='children',on_delete=models.CASCADE)
+    silinme_bilgisi = models.BooleanField(default=False,verbose_name="Silinme Bilgisi")
     def __str__(self):
         full_path = [self.isim]                  # post.  use __unicode__ in place of
         k = self.parent
@@ -32,15 +38,16 @@ class urunler(models.Model):
         ('False', 'Hayır'),
     )
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
-    siralama = models.BigIntegerField(null=True)
-    category = models.ForeignKey(kategoriler, on_delete=models.CASCADE)
-    isim = models.CharField(max_length=150)
-    link = kategory_link_ayari(max_length=100 , null="True")
+    siralama = models.BigIntegerField(null=True,verbose_name="Sıralaması")
+    category = models.ForeignKey(kategoriler,verbose_name="Kategorisi", on_delete=models.CASCADE)
+    isim = models.CharField(max_length=150,verbose_name="İsmi")
+    link = kategory_link_ayari(max_length=100 , null="True",verbose_name="Tanıtım Açıklaması")
     keywords = models.CharField(max_length=255)
     resimi=models.ImageField(upload_to='images/',null=False)
-    fiyat = models.DecimalField(max_digits=12, decimal_places=2,default=0)
-    Durum=models.CharField(max_length=10,choices=STATUS,default = "Evet")
+    fiyat = models.DecimalField(max_digits=12, decimal_places=2,default=0,verbose_name="Fiyatı")
+    Durum=models.CharField(max_length=10,verbose_name="Menüde Göster",choices=STATUS,default = "Evet")
     create_at=models.DateTimeField(auto_now_add=True)
+    silinme_bilgisi = models.BooleanField(default=False,verbose_name="Silinme Bilgisi")
     def __str__(self):
         return self.isim
 
