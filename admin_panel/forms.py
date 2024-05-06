@@ -86,7 +86,7 @@ class menu_ekleme(forms.ModelForm):
         fields = ['menu_isimi']
 class masa_ekleme(ModelForm):
     def __init__(self, *args, user=None, **kwargs):
-        super(bolgeler_ekleme, self).__init__(*args, **kwargs)
+        super(masa_ekleme, self).__init__(*args, **kwargs)
         self.fields['bolge_isimi'].queryset = bolgeler.objects.filter(kategori_kime_ait=user)
     class Meta:
         model = masalar
@@ -104,3 +104,27 @@ class kategori_ekleme(forms.ModelForm):
     class Meta:
         model = kategoriler
         fields = ['isim', 'parent',"Durum"]
+class birim_ekleme(forms.ModelForm):
+    class Meta:
+        model = birimler
+        fields = ['birim_isimi']
+
+
+class urun_ekleme(ModelForm):
+    def __init__(self, *args, user=None, **kwargs):
+        super(urun_ekleme, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = kategoriler.objects.filter(kategori_kime_ait=user)
+        self.fields['birim'].queryset = birimler.objects.filter(kategori_kime_ait=user)
+    class Meta:
+        model = urunler
+        fields = [ 
+            'category',
+            "birim",
+            "siralama",
+            "isim",
+            "keywords",
+            "fiyat",
+            "adet",
+            "Durum",
+            "resimi"
+        ]

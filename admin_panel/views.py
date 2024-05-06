@@ -303,3 +303,46 @@ def kategori_sileme(request,id):
     kategoriler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
     return redirect("admin_panel:kategori_duzenleme_sayfasi")
 
+
+def birim_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = birim_ekleme(request.POST or None,request.FILES or None)
+    content["form"] = logo_ekleme
+    content["iconlar"] = birimler.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:birim_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_birimler.html",
+        context=content
+        )
+def birim_sileme(request,id):
+    birimler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:birim_duzenleme_sayfasi")
+
+
+def urun_duzenleme_sayfasi(request):
+    content = site_bilgileri()
+    logo_ekleme = urun_ekleme(request.POST or None,request.FILES or None,user=request.user)
+    content["form"] = logo_ekleme
+    content["iconlar"] = urunler.objects.filter(kategori_kime_ait = request.user,silinme_bilgisi = False).order_by("-id")
+    if logo_ekleme.is_valid():
+
+            profile = logo_ekleme.save(commit=False)
+            profile.kategori_kime_ait = request.user
+            profile.save()
+            logo_ekleme.save_m2m()
+            return redirect("admin_panel:urun_duzenleme_sayfasi")
+    return render(
+        request=request,
+        template_name="admin_temp/admin_urun.html",
+        context=content
+        )
+def urun_sileme(request,id):
+    urunler.objects.filter(kategori_kime_ait = request.user,id = id).update(silinme_bilgisi = True)
+    return redirect("admin_panel:urun_duzenleme_sayfasi")

@@ -42,4 +42,10 @@ urlpatterns = [
     #kategoriler
     path("settings/kategoriler", views.kategori_duzenleme_sayfasi, name="kategori_duzenleme_sayfasi"),
     path("settings/kategoriler/<int:id>", views.kategori_sileme, name="kategori_sileme"),
+    #birimler
+    path("settings/birimler", views.birim_duzenleme_sayfasi, name="birim_duzenleme_sayfasi"),
+    path("settings/birimler/<int:id>", views.birim_sileme, name="birim_sileme"),
+    #urunler
+    path("settings/urunler", views.urun_duzenleme_sayfasi, name="urun_duzenleme_sayfasi"),
+    path("settings/urunler/<int:id>", views.urun_sileme, name="urun_sileme"),
 ]

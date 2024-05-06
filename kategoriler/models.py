@@ -31,7 +31,15 @@ class kategoriler(models.Model):
             full_path.append(k.isim)
             k = k.parent
         return ' --> '.join(full_path[::-1])
-
+class birimler(models.Model):
+    kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
+    birim_isimi = models.CharField(max_length=200,verbose_name="Birim Adı")
+    silinme_bilgisi = models.BooleanField(default= False,verbose_name="Silinme Bilgisi")
+    def __str__(self) -> str:
+        if self.silinme_bilgisi:
+            return  "Silinen Birim : "+self.birim_isimi
+        else:
+            return self.birim_isimi
 class urunler(models.Model):
     STATUS = (
         ('True', 'Evet'),
@@ -40,14 +48,16 @@ class urunler(models.Model):
     kategori_kime_ait = models.ForeignKey(CustomUser,blank=True,null=True,on_delete=models.CASCADE)
     siralama = models.BigIntegerField(null=True,verbose_name="Sıralaması")
     category = models.ForeignKey(kategoriler,verbose_name="Kategorisi", on_delete=models.CASCADE)
+    birim = models.ForeignKey(birimler,verbose_name="Birimi",blank=True,null=True,on_delete=models.CASCADE)
     isim = models.CharField(max_length=150,verbose_name="İsmi")
     link = kategory_link_ayari(max_length=100 , null="True",verbose_name="Tanıtım Açıklaması")
-    keywords = models.CharField(max_length=255)
-    resimi=models.ImageField(upload_to='images/',null=False)
+    keywords = models.CharField(max_length=255, null="True",verbose_name="Tanıtım Açıklaması")
+    resimi=models.ImageField(upload_to='images/',null=False,verbose_name="Ürün Resmi")
     fiyat = models.DecimalField(max_digits=12, decimal_places=2,default=0,verbose_name="Fiyatı")
     Durum=models.CharField(max_length=10,verbose_name="Menüde Göster",choices=STATUS,default = "Evet")
     create_at=models.DateTimeField(auto_now_add=True)
     silinme_bilgisi = models.BooleanField(default=False,verbose_name="Silinme Bilgisi")
+    adet = models.DecimalField(max_digits=12, decimal_places=2,default=0,verbose_name="Adet")
     def __str__(self):
         return self.isim
 
