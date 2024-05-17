@@ -128,3 +128,32 @@ class urun_ekleme(ModelForm):
             "Durum",
             "resimi"
         ]
+
+class UserRegistrationForm(UserCreationForm):
+    email = forms.EmailField(help_text='Email Adresinizi Giriniz', required=True)
+    username = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Kullanıcı Adı'}),
+        label="Kullanıcı Adı")
+    first_name = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Adınız'}),
+        label="Adınız")
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Soyadınız'}),
+        label="Soyadınız")
+    password1 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Şifre'})
+        ,label="Şifre")
+    password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Şifre Tekrar'})
+        ,label="Şifre Tekrar")
+    class Meta:
+        model = get_user_model()
+        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2',"status"]
+
+    def save(self, commit=True):
+        user = super(UserRegistrationForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+
+        return user

@@ -3,10 +3,10 @@ import random
 import datetime
 print(datetime.datetime.now())
 apiSecret = "ee6cfe62b5b603367df4eabea6c5c0312db42b61"
-deviceId = "00000000-0000-0000-2db4-4587ec6e272c"
+deviceId = "00000000-0000-0000-cf0a-35a13eaa8bec"
 test = []
 c = 0
-for i in range(9607900045,9607999999):
+for i in range(9607967245,9607999999):
     if c == 33600:
         break
     a = "+"+str(i)
