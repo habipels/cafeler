@@ -1,4 +1,4 @@
 a =""
-for i in range(500,1500):
-    a = a+"+"+str(9609900000+i)+"\n"
+for i in range(5000):
+    a = a+"+"+str(9607909999+i)+"\n"
 print(a)
